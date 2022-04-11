@@ -1,4 +1,5 @@
-﻿using Dal_GestContact.Entities;
+﻿using ApiToolbox;
+using Dal_GestContact.Entities;
 using Dal_GestContact.Interface;
 using Newtonsoft.Json;
 using System;
@@ -12,60 +13,77 @@ namespace Dal_GestContact.Services
 {
     public class ContactService : IContactRepo
     {
+        //public IEnumerable<Contact> GetAll()
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("https://localhost:7089/api/");
+
+        //        using (HttpResponseMessage message = client.GetAsync("Contact").Result)
+        //        {
+
+        //            message.EnsureSuccessStatusCode();
+
+        //            string json = message.Content.ReadAsStringAsync().Result;
+
+        //            IEnumerable<Contact> contacts = JsonConvert.DeserializeObject<IEnumerable<Contact>>(json);
+
+        //            //foreach (Contact contact in contacts)
+        //            //{
+        //            //    yield return contact;
+        //            //}
+        //            if (contacts is null)
+        //                throw new Exception("Aucun contact à afficher");
+
+        //            return contacts;
+
+
+        //        }
+        //    }
+        //}
+
+        private readonly string _baseAdress = "https://localhost:7089/api/";
+        private ApiRequester requester;
+        public ContactService()
+        {
+            requester = new ApiRequester(_baseAdress);
+        }
+
         public IEnumerable<Contact> GetAll()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:7089/api/");
-
-                using (HttpResponseMessage message = client.GetAsync("Contact").Result)
-                {
-
-                    message.EnsureSuccessStatusCode();
-
-                    string json = message.Content.ReadAsStringAsync().Result;
-
-                    IEnumerable<Contact> contacts = JsonConvert.DeserializeObject<IEnumerable<Contact>>(json);
-
-                    //foreach (Contact contact in contacts)
-                    //{
-                    //    yield return contact;
-                    //}
-                    if (contacts is null)
-                        throw new Exception("Aucun contact à afficher");
-
-                    return contacts;
-
-
-                }
-            }
+            return requester.Get<IEnumerable<Contact>>("Contact");
         }
 
         public Contact GetById(int Id)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:7089/api/");
-
-                using (HttpResponseMessage message = client.GetAsync("Contact/" + Id).Result)
-                {
-
-                    message.EnsureSuccessStatusCode();
-
-                    string json = message.Content.ReadAsStringAsync().Result;
-
-                    Contact contacts = JsonConvert.DeserializeObject<Contact>(json);
-
-
-                    if (contacts is null)
-                        throw new Exception("Aucun contact à afficher");
-
-                    return contacts;
-
-
-                }
-            }
+            return requester.Get<Contact>("Contact/" + Id);
         }
+
+        //public Contact GetById(int Id)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("https://localhost:7089/api/");
+
+        //        using (HttpResponseMessage message = client.GetAsync("Contact/" + Id).Result)
+        //        {
+
+        //            message.EnsureSuccessStatusCode();
+
+        //            string json = message.Content.ReadAsStringAsync().Result;
+
+        //            Contact contacts = JsonConvert.DeserializeObject<Contact>(json);
+
+
+        //            if (contacts is null)
+        //                throw new Exception("Aucun contact à afficher");
+
+        //            return contacts;
+
+
+        //        }
+        //    }
+        //}
 
         public void Post(Contact c)
         {
