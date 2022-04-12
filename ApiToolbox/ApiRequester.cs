@@ -22,30 +22,46 @@ namespace ApiToolbox
         }
         public TResult Get<TResult>(string route)
         {
-           
-                using (HttpResponseMessage message = _httpClient.GetAsync(route).Result)
-                {
-                    message.EnsureSuccessStatusCode();
-                    string json = message.Content.ReadAsStringAsync().Result;
+            using (HttpResponseMessage message = _httpClient.GetAsync(route).Result)
+            {
+                message.EnsureSuccessStatusCode();
+                string json = message.Content.ReadAsStringAsync().Result;
 
-                    return JsonConvert.DeserializeObject<TResult>(json);
-                }
-            
+                return JsonConvert.DeserializeObject<TResult>(json);
+            }
         }
 
-        public void Post()
+        public void Post<TEntity>(TEntity entity, string route)
         {
+            string json = JsonConvert.SerializeObject(entity);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
+            using (HttpResponseMessage message = _httpClient.PostAsync(route, content).Result)
+            {
+                message.EnsureSuccessStatusCode();
+            }
         }
 
-        public void Put()
+        public void Put<TEntity>(TEntity entity, string route)
         {
+            string json = JsonConvert.SerializeObject(entity);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
+            using (HttpResponseMessage message = _httpClient.PutAsync(route, content).Result)
+            {
+                message.EnsureSuccessStatusCode();
+            }
         }
 
-        public void Delete()
-        {
 
+        public void Delete(string route)
+        {
+            using (HttpResponseMessage message = _httpClient.DeleteAsync(route).Result)
+            {
+                message.EnsureSuccessStatusCode();
+            }
         }
     }
 }

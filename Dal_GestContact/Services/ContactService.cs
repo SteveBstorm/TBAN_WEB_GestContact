@@ -85,56 +85,71 @@ namespace Dal_GestContact.Services
         //    }
         //}
 
+
         public void Post(Contact c)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:7089/api/");
-
-                string json = JsonConvert.SerializeObject(c);
-                HttpContent content = new StringContent(json);
-
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-                using (HttpResponseMessage message = client.PostAsync("Contact", content).Result)
-                {
-                    message.EnsureSuccessStatusCode();
-
-
-                }
-            }
+            requester.Post(c, "Contact");
         }
+        //public void Post(Contact c)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("https://localhost:7089/api/");
+
+        //        string json = JsonConvert.SerializeObject(c);
+        //        HttpContent content = new StringContent(json);
+
+        //        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        //        using (HttpResponseMessage message = client.PostAsync("Contact", content).Result)
+        //        {
+        //            message.EnsureSuccessStatusCode();
+
+
+        //        }
+        //    }
+        //}
+
+        //public void Delete(int Id)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("https://localhost:7089/api/");
+
+
+        //        using (HttpResponseMessage message = client.DeleteAsync("Contact/" + Id).Result)
+        //        {
+        //            message.EnsureSuccessStatusCode();
+        //        }
+        //    }
+        //}
 
         public void Delete(int Id)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:7089/api/");
-
-
-                using (HttpResponseMessage message = client.DeleteAsync("Contact/" + Id).Result)
-                {
-                    message.EnsureSuccessStatusCode();
-                }
-            }
+            requester.Delete("Contact/" + Id);
         }
+
+        //public void Update(Contact c)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("https://localhost:7089/api/");
+
+        //        string json = JsonConvert.SerializeObject(c);
+        //        HttpContent content = new StringContent(json);
+
+        //        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        //        using (HttpResponseMessage message = client.PutAsync("Contact/" + c.Id, content).Result)
+        //        {
+        //            message.EnsureSuccessStatusCode();
+        //        }
+        //    }
+        //}
 
         public void Update(Contact c)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:7089/api/");
-
-                string json = JsonConvert.SerializeObject(c);
-                HttpContent content = new StringContent(json);
-
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-                using (HttpResponseMessage message = client.PutAsync("Contact/" + c.Id, content).Result)
-                {
-                    message.EnsureSuccessStatusCode();
-                }
-            }
+            requester.Put(c, "Contact/" + c.Id);
         }
     }
 }
