@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Dal_GestContact.Entities.Contact>
-
+﻿@using WEB_GestContact.Tools
+@model IEnumerable<Dal_GestContact.Entities.Contact>
+@inject SessionManager _session;
 @{
     ViewData["Title"] = "Index";
 }
@@ -49,9 +50,17 @@
                 @Html.DisplayFor(modelItem => item.BirthDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+                    @if(_session.CurrentUser != null && _session.CurrentUser.Role == "admin")
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.Id  }) 
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.Id  })
+                    }
+                     |
+                     @if(_session.CurrentUser != null) {
+                         @Html.ActionLink("Details", "Details", new {  id=item.Id }) 
+                     }
+                
+                
             </td>
         </tr>
 }

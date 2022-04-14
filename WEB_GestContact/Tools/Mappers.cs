@@ -39,5 +39,15 @@ namespace WEB_GestContact.Tools
                 Email = c.Email
             };
         }
+
+        public static AppUser ToASP(this User u)
+        {
+            return new AppUser
+            {
+                Id = u.Id,
+                NickName = u.NickName,
+                Email = u.Email
+            };
+        }
     }
 }

@@ -54,9 +54,9 @@ namespace Dal_GestContact.Services
             return requester.Get<IEnumerable<Contact>>("Contact");
         }
 
-        public Contact GetById(int Id)
+        public Contact GetById(int Id, string token)
         {
-            return requester.Get<Contact>("Contact/" + Id);
+            return requester.Get<Contact>("Contact/" + Id, token);
         }
 
         //public Contact GetById(int Id)
@@ -86,10 +86,11 @@ namespace Dal_GestContact.Services
         //}
 
 
-        public void Post(Contact c)
+        public void Post(Contact c, string token)
         {
-            requester.Post(c, "Contact");
+            requester.Post(c, "Contact", token);
         }
+
         //public void Post(Contact c)
         //{
         //    using (HttpClient client = new HttpClient())
@@ -124,9 +125,9 @@ namespace Dal_GestContact.Services
         //    }
         //}
 
-        public void Delete(int Id)
+        public void Delete(int Id, string token)
         {
-            requester.Delete("Contact/" + Id);
+            requester.Delete("Contact/" + Id, token);
         }
 
         //public void Update(Contact c)
@@ -147,9 +148,9 @@ namespace Dal_GestContact.Services
         //    }
         //}
 
-        public void Update(Contact c)
+        public void Update(Contact c, string token)
         {
-            requester.Put(c, "Contact/" + c.Id);
+            requester.Put(c, "Contact/" + c.Id, token);
         }
     }
 }

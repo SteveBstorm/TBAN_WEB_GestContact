@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using WEB_GestContact.Models;
 
 namespace WEB_GestContact.Controllers
@@ -16,6 +18,7 @@ namespace WEB_GestContact.Controllers
         public IActionResult Index()
         {
             return View();
+        
         }
 
         public IActionResult Privacy()

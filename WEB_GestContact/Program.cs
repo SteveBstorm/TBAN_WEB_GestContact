@@ -1,12 +1,21 @@
 using Dal_GestContact.Interface;
 using Dal_GestContact.Services;
+using WEB_GestContact.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession();
+
 builder.Services.AddSingleton<IContactRepo, ContactService>();
+builder.Services.AddSingleton<IUserRepo, UserService>();
+
+builder.Services.AddScoped<SessionManager>();
 
 var app = builder.Build();
 
@@ -22,6 +31,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

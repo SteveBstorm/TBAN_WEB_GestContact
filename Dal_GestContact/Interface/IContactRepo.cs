@@ -4,10 +4,10 @@ namespace Dal_GestContact.Interface
 {
     public interface IContactRepo
     {
-        void Delete(int Id);
+        void Delete(int Id, string token);
         IEnumerable<Contact> GetAll();
-        Contact GetById(int Id);
-        void Post(Contact c);
-        void Update(Contact c);
+        Contact GetById(int Id, string token);
+        void Post(Contact c, string token);
+        void Update(Contact c, string token);
     }
 }
